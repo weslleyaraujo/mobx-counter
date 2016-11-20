@@ -1,0 +1,24 @@
+@import '~basscss/css/basscss.css';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Fira Code, monospace;
+  background-color: #F7DDE2;
+}
+
+button {
+  appearance: none;
+  background-color: #DE6E82;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  color: #FFF;
+  text-transform: uppercase;
+  margin: 0 10px;
+}
+
+.counter {
+  font-size: 110px;
+  color: #DE6E82;
+}
