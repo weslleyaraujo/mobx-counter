@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-
+import { AppContainer } from 'react-hot-loader';
 import { observable } from 'mobx';
-import { observer } from 'mobx-react';
+
+import App from './App';
+import './index.css';
 
 const state = observable({
   count: 0,
@@ -14,22 +15,25 @@ state.decrease = _ => state.count -= 1;
 state.incrementAsync = _ => setTimeout(_ => state.count += 1, 600);
 state.incrementIfOdd = _ =>
   state.count = state.count % 2 !== 0 ? (state.count + 1) : state.count;
+state.autoIncrement = _ => state.interval = setInterval(_ => state.increment(), 1000);
+state.clearAutoIncrement = _ => state.interval = clearInterval(state.interval);
+  
 
-const App = observer(({ state }) => (
-  <div>
-    <div className="flex justify-center p4 counter">
-      {state.count}
-    </div>
-    <div className="flex justify-center p4">
-      <button onClick={_ => state.increment()}>Increment</button>
-      <button onClick={_ => state.decrease()}>Decrement</button>
-      <button onClick={_ => state.incrementIfOdd()}>Increment if odd</button>
-      <button onClick={_ => state.incrementAsync()}>Increment async</button>
-    </div>
-  </div>
-));
+const render = (Component) => {
+  ReactDOM.render(
+    <AppContainer>
+      <Component state={state} />
+    </AppContainer>,
+    document.getElementById('root')
+  );
+};
 
-ReactDOM.render(
-  <App state={state} />,
-  document.getElementById('root')
-);
+
+render(App);
+
+if (module.hot) {
+  module.hot.accept('./App', () => {
+    const App = require('./App').default;
+    render(App);
+  });
+}
