@@ -21,8 +21,8 @@ const App = observer(({ state }) => (
       {state.count}
     </div>
     <div className="flex justify-center p4">
-      <button onClick={_ => state.increment()}>Increase</button>
-      <button onClick={_ => state.decrease()}>Decrease</button>
+      <button onClick={_ => state.increment()}>Increment</button>
+      <button onClick={_ => state.decrease()}>Decrement</button>
       <button onClick={_ => state.incrementIfOdd()}>Increment if odd</button>
       <button onClick={_ => state.incrementAsync()}>Increment async</button>
     </div>
