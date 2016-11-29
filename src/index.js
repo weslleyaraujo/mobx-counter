@@ -10,14 +10,20 @@ const state = observable({
   count: 0,
 });
 
-state.increment = _ => state.count += 1;
-state.decrease = _ => state.count -= 1;
-state.incrementAsync = _ => setTimeout(_ => state.count += 1, 600);
-state.incrementIfOdd = _ =>
-  state.count = state.count % 2 !== 0 ? (state.count + 1) : state.count;
-state.autoIncrement = _ => state.interval = setInterval(_ => state.increment(), 1000);
-state.clearAutoIncrement = _ => state.interval = clearInterval(state.interval);
-  
+const isOdd = n => n % 2 !== 0;
+
+// actions (?)
+state.intervalTime = 600;
+state.increment = () => state.count += 1;
+state.decrease = () => state.count -= 1;
+state.incrementAsync = () => setTimeout(state.increment, state.intervalTime);
+state.incrementIfOdd = () =>
+  state.count = isOdd(state.count) ? (state.count + 1) : state.count;
+state.autoIncrement = _ => {
+  state.increment();
+  state.interval = setInterval(state.increment, 1000);
+}
+state.clearAutoIncrement = () => state.interval = clearInterval(state.interval);
 
 const render = (Component) => {
   ReactDOM.render(
@@ -28,9 +34,9 @@ const render = (Component) => {
   );
 };
 
-
 render(App);
 
+// should be removed in production bundle
 if (module.hot) {
   module.hot.accept('./App', () => {
     const App = require('./App').default;

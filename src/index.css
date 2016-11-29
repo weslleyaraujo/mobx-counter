@@ -14,11 +14,20 @@ button {
   padding: 10px 20px;
   border-radius: 3px;
   color: #FFF;
+  outline: none;
   text-transform: uppercase;
   margin: 0 10px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.102);
+  background-color: #D26578;
 }
 
 .counter {
+  pointer-events: none;
   font-size: 110px;
   color: #DE6E82;
 }
